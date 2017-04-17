@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="StudentOrgs" Class="MyOrgsDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=WEB-APPS-DEV;Initial Catalog=StudentOrgs;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="StudentOrgsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="User_ID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Lastname" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Role_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="Char(15)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(254)" CanBeNull="true" />
+      <Association Name="User_UserOrg" Member="UserOrgs" ThisKey="User_ID" OtherKey="User_ID" Type="UserOrg" />
+      <Association Name="User_OrgEvent" Member="OrgEvents" ThisKey="User_ID" OtherKey="CreatedByUser" Type="OrgEvent" />
+      <Association Name="Role_User" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserOrgs" Member="UserOrgs">
+    <Type Name="UserOrg">
+      <Column Name="User_ID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="active_date" Type="System.DateTime" DbType="SmallDateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="inactive_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Association Name="User_UserOrg" Member="User" ThisKey="User_ID" OtherKey="User_ID" Type="User" IsForeignKey="true" />
+      <Association Name="Organization_UserOrg" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Term" Member="Terms">
+    <Type Name="Term">
+      <Column Name="Session" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Year" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentRoster" Member="StudentRosters">
+    <Type Name="StudentRoster">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BeginDate" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Member_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Session" Type="System.String" DbType="Char(4)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PrimaryContact" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Student_StudentRoster" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+      <Association Name="MemberType_StudentRoster" Member="MemberType" ThisKey="Member_ID" OtherKey="Member_ID" Type="MemberType" IsForeignKey="true" />
+      <Association Name="Organization_StudentRoster" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="ClassOf" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PreferredPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Carroll_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GPAOrg" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Major" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Major2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CertifiedDriver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ApprovedDriver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="GPABoard" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Ferpa" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="GreekGPA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OnCampus" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Race" Type="System.String" DbType="Char(50) NOT NULL" CanBeNull="false" />
+      <Column Name="International" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_StudentRoster" Member="StudentRosters" ThisKey="Student_ID" OtherKey="Student_ID" Type="StudentRoster" />
+      <Association Name="Student_OrgEvent" Member="OrgEvents" ThisKey="Student_ID" OtherKey="Driver1" Type="OrgEvent" />
+      <Association Name="Student_OrgEvent1" Member="OrgEvents1" ThisKey="Student_ID" OtherKey="Driver2" Type="OrgEvent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ServiceProjectComments" Member="ServiceProjectComments">
+    <Type Name="ServiceProjectComment">
+      <Column Name="ServiceProject_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="ServiceProject_ServiceProjectComment" Member="ServiceProject" ThisKey="ServiceProject_ID" OtherKey="ServiceProject_ID" Type="ServiceProject" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ServiceProject" Member="ServiceProjects">
+    <Type Name="ServiceProject">
+      <Column Name="ServiceProject_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CommunityPartner" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NoOfVolunteers" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HoursVolunteered" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="OnGoing" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TimeFrom" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TimeTo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MeetDay" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetFrequency" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Funds" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="ServiceProject_ServiceProjectComment" Member="ServiceProjectComments" ThisKey="ServiceProject_ID" OtherKey="ServiceProject_ID" Type="ServiceProjectComment" />
+      <Association Name="Organization_ServiceProject" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="Role_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Role_Name" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_User" Member="Users" ThisKey="Role_ID" OtherKey="Role_ID" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgStatus" Member="OrgStatus">
+    <Type Name="OrgStatus">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Status_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Organization_OrgStatus" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgEvent" Member="OrgEvents">
+    <Type Name="OrgEvent">
+      <Column Name="Event_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Time" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="OrganizationWorkedWith" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Attendance" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HoursVolunteered" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DollarsSpentByOrg" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EventType" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OnOffCampus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VanRental" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BusRental" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Driver1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Driver2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DollarsSpentByPartner" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="CreatedByUser" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RoomReserved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Marketing" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Catering" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SignupForm" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ActivityWaiver" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CUNight" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="OrgEvent_EventComment" Member="EventComments" ThisKey="Event_ID" OtherKey="Event_ID" Type="EventComment" />
+      <Association Name="Student_OrgEvent" Member="Student" ThisKey="Driver1" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+      <Association Name="Student_OrgEvent1" Member="Student1" ThisKey="Driver2" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+      <Association Name="User_OrgEvent" Member="User" ThisKey="CreatedByUser" OtherKey="User_ID" Type="User" IsForeignKey="true" />
+      <Association Name="Organization_OrgEvent" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgDocs" Member="OrgDocs">
+    <Type Name="OrgDoc">
+      <Column Name="OrgDocs_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocDueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UploadedFile" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgComments" Member="OrgComments">
+    <Type Name="OrgComment">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Organization_OrgComment" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgCategory" Member="OrgCategories">
+    <Type Name="OrgCategory">
+      <Column Name="Category_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CategoryName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AddDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="GreekOrg" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="OrgCategory_Organization" Member="Organizations" ThisKey="Category_ID" OtherKey="Category_ID" Type="Organization" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrgAdvisor" Member="OrgAdvisors">
+    <Type Name="OrgAdvisor">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Advisor_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Advisor_OrgAdvisor" Member="Advisor" ThisKey="Advisor_ID" OtherKey="Advisor_ID" Type="Advisor" IsForeignKey="true" />
+      <Association Name="Organization_OrgAdvisor" Member="Organization" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="Organization" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MemberType" Member="MemberTypes">
+    <Type Name="MemberType">
+      <Column Name="Member_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MemberName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AddDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BoardMember" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="MemberType_StudentRoster" Member="StudentRosters" ThisKey="Member_ID" OtherKey="Member_ID" Type="StudentRoster" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EventComments" Member="EventComments">
+    <Type Name="EventComment">
+      <Column Name="Event_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="OrgEvent_EventComment" Member="OrgEvent" ThisKey="Event_ID" OtherKey="Event_ID" Type="OrgEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Advisor" Member="Advisors">
+    <Type Name="Advisor">
+      <Column Name="Advisor_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="OffCampus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProfessionalTitle" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="AdvisorTitle" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="Advisor_OrgAdvisor" Member="OrgAdvisors" ThisKey="Advisor_ID" OtherKey="Advisor_ID" Type="OrgAdvisor" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Organization" Member="Organizations">
+    <Type Name="Organization">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrganizationName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="MeetingDay" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingTime" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingBuilding" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingRoom" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="DateProposed" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ProposalAccepted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ProposalDenied" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ProposalNotes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ConstitutionSubmitted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConstitutionAccepted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConstitutionNotes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="RegistrarApproval" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CX_Code" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Category_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RequirementsMet" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RequirementsMetDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConstitutionDenied" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConstitutionUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MeetingFrequency" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="OAccount" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectCode" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Association Name="Organization_UserOrg" Member="UserOrgs" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="UserOrg" />
+      <Association Name="Organization_StudentRoster" Member="StudentRosters" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="StudentRoster" />
+      <Association Name="Organization_ServiceProject" Member="ServiceProjects" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="ServiceProject" />
+      <Association Name="Organization_OrgStatus" Member="OrgStatus" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="OrgStatus" />
+      <Association Name="Organization_OrgEvent" Member="OrgEvents" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="OrgEvent" />
+      <Association Name="Organization_OrgComment" Member="OrgComments" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="OrgComment" />
+      <Association Name="Organization_OrgAdvisor" Member="OrgAdvisors" ThisKey="Organization_ID" OtherKey="Organization_ID" Type="OrgAdvisor" />
+      <Association Name="OrgCategory_Organization" Member="OrgCategory" ThisKey="Category_ID" OtherKey="Category_ID" Type="OrgCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.sp_GetMyOrgsEventList" Method="sp_GetMyOrgsEventList">
+    <Parameter Name="OrgID" Parameter="orgID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Incl_Old" Parameter="incl_Old" Type="System.String" DbType="VarChar(1)" />
+    <ElementType Name="sp_GetMyOrgsEventListResult">
+      <Column Name="Event_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="EventTime" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OrganizationWorkedWith" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetMyOrgsReportRoster" Method="sp_GetMyOrgsReportRoster">
+    <Parameter Name="OrgID" Parameter="orgID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="cl_filter" Type="System.String" DbType="VarChar(2)" />
+    <ElementType Name="sp_GetMyOrgsReportRosterResult">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Term" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OrganizationName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="MemberName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Member_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Carroll_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="sort_order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="classification" Type="System.String" DbType="VarChar(9)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetUserOrgsByID" Method="sp_GetUserOrgsByID">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="sp_GetUserOrgsByIDResult">
+      <Column Name="User_ID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active_date" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="inactive_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="OrganizationName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_UpdateStudentRosterRow" Method="sp_UpdateStudentRosterRow">
+    <Parameter Name="Student_ID" Parameter="student_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetRoleOfUser" Method="sp_GetRoleOfUser">
+    <Parameter Name="User_ID" Parameter="user_ID" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="RoleName" Parameter="roleName" Type="System.String" DbType="VarChar(15)" Direction="InOut" />
+    <Parameter Name="isActive" Type="System.Boolean" DbType="Bit" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_NewStudentRosterRow" Method="sp_NewStudentRosterRow">
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Student_ID" Parameter="student_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetStudentByName" Method="sp_GetStudentByName">
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="sp_GetStudentByNameResult">
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Carroll_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgs_Organization" Method="sp_UpdateMyOrgs_Organization">
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UpdateMode" Parameter="updateMode" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="MeetingDay" Parameter="meetingDay" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="MeetingTime" Parameter="meetingTime" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="MeetingFrequency" Parameter="meetingFrequency" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="MeetingBuilding" Parameter="meetingBuilding" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="MeetingRoom" Parameter="meetingRoom" Type="System.String" DbType="VarChar(20)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateUser" Method="sp_UpdateUser">
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="RoleID" Parameter="roleID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(254)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetUserByID" Method="sp_GetUserByID">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="sp_GetUserByIDResult">
+      <Column Name="User_ID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Lastname" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Role_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="Char(15)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(254)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgEventDetails" Method="sp_UpdateMyOrgEventDetails">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="OnOffCampus" Parameter="onOffCampus" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Date" Parameter="date" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Time" Parameter="time" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Attendence" Parameter="attendence" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgEventCosts" Method="sp_UpdateMyOrgEventCosts">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="VanRental" Parameter="vanRental" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="BusRental" Parameter="busRental" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Dollars" Parameter="dollars" Type="System.String" DbType="VarChar(18)" />
+    <Parameter Name="DollarsByPartner" Parameter="dollarsByPartner" Type="System.String" DbType="VarChar(18)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetDrivers" Method="sp_GetDrivers">
+    <ElementType Name="sp_GetDriversResult">
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CertifiedDriver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ApprovedDriver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(41)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetEventDrivers_byEvent" Method="sp_GetEventDrivers_byEvent">
+    <Parameter Name="EventID" Parameter="eventID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetEventDrivers_byEventResult">
+      <Column Name="LastName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DriverType" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgEventDriver" Method="sp_UpdateMyOrgEventDriver">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Student_ID" Parameter="student_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mode" Type="System.String" DbType="VarChar(1)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgEventChecklist" Method="sp_UpdateMyOrgEventChecklist">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="location" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="marketing" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="catering" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="event_signup" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="activity_waiver" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="cu_night" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetOrgEvent" Method="sp_GetOrgEvent">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetOrgEventResult">
+      <Column Name="Event_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Time" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="OrganizationWorkedWith" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Attendance" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HoursVolunteered" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DollarsSpentByOrg" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EventType" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OnOffCampus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VanRental" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BusRental" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Driver1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Driver2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DollarsSpentByPartner" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="NumberOfVolunteers" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedByUser" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RoomReserved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Marketing" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Catering" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SignupForm" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ActivityWaiver" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CUNight" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Driver1Name" Type="System.String" DbType="VarChar(41)" CanBeNull="true" />
+      <Column Name="Driver2Name" Type="System.String" DbType="VarChar(41)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_NewEventComments" Method="sp_NewEventComments">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Date" Parameter="date" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="Text" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(20)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetCommentsByEventID" Method="sp_GetCommentsByEventID">
+    <Parameter Name="EventID" Parameter="eventID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetCommentsByEventIDResult">
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="ShortDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="EventComment_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_DeleteEventComment" Method="sp_DeleteEventComment">
+    <Parameter Name="EventComment_ID" Parameter="eventComment_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateEventComment" Method="sp_UpdateEventComment">
+    <Parameter Name="EventComment_ID" Parameter="eventComment_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="Text" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_NewMyOrgsEvent" Method="sp_NewMyOrgsEvent">
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(20)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgServiceDetails" Method="sp_UpdateMyOrgServiceDetails">
+    <Parameter Name="ServiceProject_ID" Parameter="serviceProject_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Title" Parameter="title" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="OnGoing" Parameter="onGoing" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="StartDate" Parameter="startDate" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="TimeFrom" Parameter="timeFrom" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="TimeTo" Parameter="timeTo" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_NewMyOrgsServiceProject" Method="sp_NewMyOrgsServiceProject">
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgEventPartner" Method="sp_UpdateMyOrgEventPartner">
+    <Parameter Name="Event_ID" Parameter="event_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="OrganizationWorkedWith" Parameter="organizationWorkedWith" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactName" Parameter="contactName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactEmail" Parameter="contactEmail" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactPhone" Parameter="contactPhone" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="HoursVolunteered" Parameter="hoursVolunteered" Type="System.String" DbType="VarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgServicePartner" Method="sp_UpdateMyOrgServicePartner">
+    <Parameter Name="Service_ID" Parameter="service_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CommunityPartner" Parameter="communityPartner" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="ContactName" Parameter="contactName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactEmail" Parameter="contactEmail" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ContactPhone" Parameter="contactPhone" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_DeleteServiceComment" Method="sp_DeleteServiceComment">
+    <Parameter Name="ServiceComment_ID" Parameter="serviceComment_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateServiceComment" Method="sp_UpdateServiceComment">
+    <Parameter Name="ServiceComment_ID" Parameter="serviceComment_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="Text" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_NewServiceProjectComments" Method="sp_NewServiceProjectComments">
+    <Parameter Name="ServiceProject_ID" Parameter="serviceProject_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Date" Parameter="date" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Text" Parameter="text" Type="System.String" DbType="Text" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(20)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetCommentsByServiceProjectID" Method="sp_GetCommentsByServiceProjectID">
+    <Parameter Name="ServiceProject_ID" Parameter="serviceProject_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetCommentsByServiceProjectIDResult">
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="ShortDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ServiceComment_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetServiceProject" Method="sp_GetServiceProject">
+    <Parameter Name="ServiceProject_ID" Parameter="serviceProject_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetServiceProjectResult">
+      <Column Name="ServiceProject_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CommunityPartner" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ContactEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NoOfVolunteers" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HoursVolunteered" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="OnGoing" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TimeFrom" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TimeTo" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MeetDay" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetFrequency" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Funds" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Planned_NoOfVolunteers" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Planned_HoursVolunteered" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Planned_Funds" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_UpdateMyOrgServiceResults" Method="sp_UpdateMyOrgServiceResults">
+    <Parameter Name="Service_ID" Parameter="service_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Planned_Volunteers" Parameter="planned_Volunteers" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Planned_Hours" Parameter="planned_Hours" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Planned_Items" Parameter="planned_Items" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="Actual_Volunteers" Parameter="actual_Volunteers" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Actual_Hours" Parameter="actual_Hours" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Actual_Items" Parameter="actual_Items" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_GetMyOrgsServiceList" Method="sp_GetMyOrgsServiceList">
+    <Parameter Name="OrgID" Parameter="orgID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Incl_Old" Parameter="incl_Old" Type="System.String" DbType="VarChar(1)" />
+    <ElementType Name="sp_GetMyOrgsServiceListResult">
+      <Column Name="ServiceProject_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="OnGoing" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="HoursVolunteered" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CommunityPartner" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Planned_HoursVolunteered" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetOrgFiles" Method="sp_GetOrgFiles">
+    <Parameter Name="org_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetOrgFilesResult">
+      <Column Name="file_number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name_of_file" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="description_of_file" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="upload_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="uploaded_by" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_NewOrgFile" Method="sp_NewOrgFile" IsComposable="true">
+    <Parameter Name="org_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="name_of_file" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="uploaded_by" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="file_contents" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.sp_GetMyOrgs_OrgByID" Method="sp_GetMyOrgs_OrgByID">
+    <Parameter Name="Organization_ID" Parameter="organization_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetMyOrgs_OrgByIDResult">
+      <Column Name="OrganizationName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="MeetingTime" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingDay" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingBuilding" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingRoom" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MeetingFrequency" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Category_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OAccount" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectCode" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="AdvisorName" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="GreekOrg" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetMyOrgsRoster" Method="sp_GetMyOrgsRoster">
+    <Parameter Name="OrgID" Parameter="orgID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetMyOrgsRosterResult">
+      <Column Name="Organization_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Carroll_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="MemberName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Member_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sort_order" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
